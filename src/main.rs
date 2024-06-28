@@ -1,7 +1,7 @@
 use std::time;
 
 use async_std::task;
-use futures::executor::block_on;
+use futures::executor;
 
 struct Song {
     index: u32
@@ -43,7 +43,27 @@ async fn async_main() -> u32 {
     return results.0;
 }
 
+async fn check_name(name: &str) -> bool {
+    let invitees = ["Alice", "Bob", "Peggy", "Victor"]; // could use a HashSet
+    task::sleep(time::Duration::from_secs(2)).await;
+    return invitees.contains(&name);
+}
+
+async fn async_num_intruders() -> usize {
+    let names = ["Alice", "Bob", "Eve", "Mallory", "Peggy", "Victor"];
+    println!("Checking in guests...");
+    let start_time = time::SystemTime::now();
+    let tasks: Vec<_> = names.iter().map(|name| check_name(name)).collect();
+    let results = futures::future::join_all(tasks).await;
+    let end_time = time::SystemTime::now();
+    let elapsed = end_time.duration_since(start_time).unwrap().as_secs_f64();
+    println!("Checking in guests took {} seconds", elapsed);
+    return results.iter().filter(|result| !**result).count();
+}
+
 fn main() {
-    let result = block_on(async_main());
+    let result = executor::block_on(async_main());
     println!("Got this index from async main: {}", result);
+    let intruders = executor::block_on(async_num_intruders());
+    println!("There are {} intruders!", intruders);
 }
