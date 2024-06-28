@@ -47,7 +47,7 @@ async def async_num_intruders() -> int:
     start_time = time.time()
     tasks = [asyncio.create_task(check_name(name)) for name in names] # Tasks start executing here
     results = await asyncio.gather(*tasks)
-    # The above line of code is the same as running:
+    # The line of code above is the same as running:
     # (each Task must be defined in a variable beforehand)
     # result0 = await tasks[0]
     # result1 = await tasks[1]

@@ -44,7 +44,7 @@ async function asyncNumIntruders() {
     const startTime = Date.now();
     const tasks = names.map(checkName); // Promises start executing here
     const results = await Promise.all(tasks);
-    // The above line of code is the same as running:
+    // The line of code above is the same as running:
     // (each Promise must be defined in a variable beforehand)
     // const result0 = await tasks[0];
     // const result1 = await tasks[1];
