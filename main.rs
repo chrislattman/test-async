@@ -4,7 +4,7 @@ use async_std::task;
 use futures::{executor, future};
 
 struct Song {
-    index: u32
+    index: i32
 }
 
 async fn learn_song() -> Song {
@@ -24,7 +24,7 @@ async fn dance() {
     println!("Dancing!");
 }
 
-async fn learn_and_sing() -> u32 {
+async fn learn_and_sing() -> i32 {
     // Wait until the song has been learned before singing it.
     // We use `.await` here rather than `block_on` to prevent blocking the
     // thread, which makes it possible to `dance` at the same time.
@@ -33,7 +33,7 @@ async fn learn_and_sing() -> u32 {
     return song.index;
 }
 
-async fn async_main() -> u32 {
+async fn async_main() -> i32 {
     // `join!` is like `.await` but can wait for multiple futures concurrently.
     // If we're temporarily blocked in the `learn_and_sing` future, the `dance`
     // future will take over the current thread. If `dance` becomes blocked,
@@ -58,13 +58,13 @@ async fn async_num_intruders() -> usize {
     // No known equivalent to the line of code above
     let end_time = time::SystemTime::now();
     let elapsed = end_time.duration_since(start_time).unwrap().as_secs_f64();
-    println!("Checking in guests took {} seconds", elapsed);
+    println!("Checking in guests took {:.3} seconds", elapsed);
     return results.iter().filter(|result| !**result).count();
 }
 
 fn main() {
     let result = executor::block_on(async_main());
-    println!("Got this index from async main: {}", result);
+    println!("Got this index from async_main: {}", result);
     let intruders = executor::block_on(async_num_intruders());
     println!("There are {} intruders!", intruders);
 }

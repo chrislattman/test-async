@@ -59,20 +59,11 @@ async function asyncNumIntruders() {
     return results.filter((val) => !val).length;
 }
 
-(async() => {
+async function runner() {
     const result = await asyncMain();
-    console.log(`Got this index from async main: ${result}`);
+    console.log(`Got this index from asyncMain: ${result}`);
     const intruders = await asyncNumIntruders();
     console.log(`There are ${intruders} intruders!`);
-})();
+}
 
-// asyncMain().then((result) => {
-//     console.log(`Got this index from async main: ${result}`);
-//     func1();
-// });
-
-// function func1() {
-//     asyncNumIntruders().then((result) => {
-//         console.log(`There are ${result} intruders!`);
-//     });
-// }
+runner();

@@ -57,12 +57,12 @@ async def async_num_intruders() -> int:
     # result5 = await tasks[5]
     # results = [result0, result1, result2, result3, result4, result5]
     end_time = time.time()
-    elapsed = end_time - start_time
+    elapsed = round(end_time - start_time, 3)
     print(f"Checking in guests took {elapsed} seconds")
     return results.count(False)
 
 
 result = asyncio.run(async_main())
-print(f"Got this index from async main: {result}")
+print(f"Got this index from async_main: {result}")
 intruders = asyncio.run(async_num_intruders())
 print(f"There are {intruders} intruders!")

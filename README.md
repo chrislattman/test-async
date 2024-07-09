@@ -13,3 +13,5 @@ There are 2 intruders!
 ```
 
 where `Dancing!` should appear about 1 second before the following lines through `Checking in guests...`, which itself should appear about 2 seconds before the remaining lines (the timestamp will vary every time but only by milliseconds).
+
+While Java and Go don't have the `async` keyword, there are equivalent constructs for asynchronous programming provided as examples.
