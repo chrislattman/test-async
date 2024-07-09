@@ -1,7 +1,7 @@
 use std::time;
 
 use async_std::task;
-use futures::executor;
+use futures::{executor, future};
 
 struct Song {
     index: u32
@@ -54,7 +54,7 @@ async fn async_num_intruders() -> usize {
     println!("Checking in guests...");
     let start_time = time::SystemTime::now();
     let tasks: Vec<_> = names.iter().map(|name| check_name(name)).collect();
-    let results = futures::future::join_all(tasks).await;
+    let results = future::join_all(tasks).await;
     // No known equivalent to the line of code above
     let end_time = time::SystemTime::now();
     let elapsed = end_time.duration_since(start_time).unwrap().as_secs_f64();
