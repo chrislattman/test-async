@@ -8,7 +8,7 @@ Learning song with index 2
 Singing song with index 2
 Got this index from async main: 2
 Checking in guests...
-Checking in guests took 2.0008609294891357 seconds
+Checking in guests took 2.001 seconds
 There are 2 intruders!
 ```
 
