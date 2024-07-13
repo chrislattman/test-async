@@ -1,5 +1,8 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 public class Main {
     public static class Song {
@@ -58,43 +61,36 @@ public class Main {
             e.printStackTrace();
             System.exit(1);
         }
-        for (String invitee : invitees) {
-            if (name.equals(invitee)) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.asList(invitees).contains(name);
     }
 
-    private static int asyncNumIntruders() {
+    private static long asyncNumIntruders() {
         String[] names = {"Alice", "Bob", "Eve", "Mallory", "Peggy", "Victor"};
         System.out.println("Checking in guests...");
         long startTime = System.currentTimeMillis();
-        ArrayList<CompletableFuture<Boolean>> futures = new ArrayList<>(names.length);
-        for (String name : names) {
-            futures.add(CompletableFuture.supplyAsync(() -> { return checkName(name); }));
-        }
-        int count = CompletableFuture.allOf(futures.toArray(new CompletableFuture<?>[0]))
-            .thenApply(unused -> {
-                int localCount = 0;
-                for (CompletableFuture<Boolean> future : futures) {
-                    if (!future.join()) {
-                        localCount++;
-                    }
-                }
-                return localCount;
-            })
-            .join();
+        List<CompletableFuture<Boolean>> futures = Arrays.asList(names).stream()
+            .map(name -> CompletableFuture.supplyAsync(() -> { return checkName(name); }))
+            .collect(Collectors.toList());
+        List<Boolean> results = futures.stream().map(CompletableFuture::join).collect(Collectors.toList());
+        // The line of code above is the same as running:
+        // (each CompletableFuture must be defined in a variable beforehand)
+        // boolean result0 = futures.get(0).join();
+        // boolean result1 = futures.get(1).join();
+        // boolean result2 = futures.get(2).join();
+        // boolean result3 = futures.get(3).join();
+        // boolean result4 = futures.get(4).join();
+        // boolean result5 = futures.get(5).join();
+        // List<Boolean> results = Arrays.asList(result0, result1, result2, result3, result4, result5);
         long endTime = System.currentTimeMillis();
         double elapsed = (endTime - startTime) / 1000.0;
         System.out.println("Checking in guests took " + elapsed + " seconds");
-        return count;
+        return results.stream().filter(e -> !e).count();
     }
 
     public static void main(String[] args) {
         Object result = asyncMain();
         System.out.println("Got this index from asyncMain: " + result);
-        int intruders = asyncNumIntruders();
+        long intruders = asyncNumIntruders();
         System.out.println("There are " + intruders + " intruders!");
     }
 }

@@ -53,9 +53,9 @@ async fn async_num_intruders() -> usize {
     let names = ["Alice", "Bob", "Eve", "Mallory", "Peggy", "Victor"];
     println!("Checking in guests...");
     let start_time = time::SystemTime::now();
-    let tasks: Vec<_> = names.iter().map(|name| check_name(name)).collect();
-    let results = future::join_all(tasks).await;
-    // No known equivalent to the line of code above
+    let futures: Vec<_> = names.iter().map(|name| check_name(name)).collect();
+    let results = future::join_all(futures).await;
+    // No known equivalent to the line of code above due to borrow checker
     let end_time = time::SystemTime::now();
     let elapsed = end_time.duration_since(start_time).unwrap().as_secs_f64();
     println!("Checking in guests took {:.3} seconds", elapsed);

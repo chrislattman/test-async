@@ -42,16 +42,16 @@ async function asyncNumIntruders() {
     const names = ["Alice", "Bob", "Eve", "Mallory", "Peggy", "Victor"];
     console.log("Checking in guests...");
     const startTime = Date.now();
-    const tasks = names.map(checkName); // Promises start executing here
-    const results = await Promise.all(tasks);
+    const promises = names.map(checkName); // Promises start executing here
+    const results = await Promise.all(promises);
     // The line of code above is the same as running:
     // (each Promise must be defined in a variable beforehand)
-    // const result0 = await tasks[0];
-    // const result1 = await tasks[1];
-    // const result2 = await tasks[2];
-    // const result3 = await tasks[3];
-    // const result4 = await tasks[4];
-    // const result5 = await tasks[5];
+    // const result0 = await promises[0];
+    // const result1 = await promises[1];
+    // const result2 = await promises[2];
+    // const result3 = await promises[3];
+    // const result4 = await promises[4];
+    // const result5 = await promises[5];
     // const results = [result0, result1, result2, result3, result4, result5];
     const endTime = Date.now();
     const elapsed = (endTime - startTime) / 1000;
