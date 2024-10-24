@@ -78,4 +78,5 @@ int main(void) {
     cout << "Got this index from async_main: " << result << endl;
     int intruders = async_num_intruders();
     cout << "There are " << intruders << " intruders!" << endl;
+    return 0;
 }
