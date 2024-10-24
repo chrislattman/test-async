@@ -2,7 +2,7 @@ java:
 	java Main.java
 
 cpp:
-	g++ -Wall -Wextra -pedantic -std=c++14 -o main main.cpp && ./main
+	g++ -Wall -Wextra -Werror -pedantic -std=c++14 -o main main.cpp && ./main
 
 python:
 	python3 main.py
