@@ -16,11 +16,11 @@ async def learn_song() -> Song:
     return Song(song_index)
 
 
-async def sing_song(song: Song):
+async def sing_song(song: Song) -> None:
     print(f"Singing song with index {song.index}")
 
 
-async def dance():
+async def dance() -> None:
     print("Dancing!")
 
 
@@ -48,7 +48,6 @@ async def async_num_intruders() -> int:
     tasks = [asyncio.create_task(check_name(name)) for name in names] # Tasks start executing here
     results = await asyncio.gather(*tasks)
     # The line of code above is the same as running:
-    # (each Task must be defined in a variable beforehand)
     # result0 = await tasks[0]
     # result1 = await tasks[1]
     # result2 = await tasks[2]

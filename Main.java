@@ -73,7 +73,6 @@ public class Main {
             .collect(Collectors.toList());
         List<Boolean> results = futures.stream().map(CompletableFuture::join).collect(Collectors.toList());
         // The line of code above is the same as running:
-        // (each CompletableFuture must be defined in a variable beforehand)
         // boolean result0 = futures.get(0).join();
         // boolean result1 = futures.get(1).join();
         // boolean result2 = futures.get(2).join();
