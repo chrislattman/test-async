@@ -42,7 +42,7 @@ public class Main {
     private static Object asyncMain() {
         CompletableFuture<Integer> future1 = CompletableFuture.supplyAsync(Main::learnAndSing);
         CompletableFuture<Void> future2 = CompletableFuture.runAsync(Main::dance);
-        ArrayList<Object> results = CompletableFuture.allOf(future1, future2)
+        var results = CompletableFuture.allOf(future1, future2)
             .thenApply(unused -> {
                 ArrayList<Object> list = new ArrayList<>();
                 list.add(future1.join());
@@ -68,7 +68,7 @@ public class Main {
         String[] names = {"Alice", "Bob", "Eve", "Mallory", "Peggy", "Victor"};
         System.out.println("Checking in guests...");
         long startTime = System.currentTimeMillis();
-        List<CompletableFuture<Boolean>> futures = Arrays.asList(names).stream()
+        var futures = Arrays.asList(names).stream()
             .map(name -> CompletableFuture.supplyAsync(() -> { return checkName(name); }))
             .collect(Collectors.toList());
         List<Boolean> results = futures.stream().map(CompletableFuture::join).collect(Collectors.toList());

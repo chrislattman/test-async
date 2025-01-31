@@ -16,7 +16,10 @@ go:
 rust:
 	cargo run -q
 
-clean:
-	rm -rf main target
+csharp:
+	dotnet run
 
-.PHONY: java cpp python nodejs go rust
+clean:
+	rm -rf main target bin obj
+
+.PHONY: java cpp python nodejs go rust csharp
