@@ -1,36 +1,43 @@
-﻿async Task<Song> learnSong() {
+﻿async Task<Song> learnSong()
+{
     int songIndex = 2;
     await Task.Delay(1000);
     Console.WriteLine("Learning song with index " + songIndex);
     return new Song(songIndex);
 }
 
-async Task singSong(Song song) {
+async Task singSong(Song song)
+{
     Console.WriteLine("Singing song with index " + song.index);
 }
 
-async Task dance() {
+async Task dance()
+{
     Console.WriteLine("Dancing!");
 }
 
-async Task<int> learnAndSing() {
+async Task<int> learnAndSing()
+{
     Song song = await learnSong();
     await singSong(song);
     return song.index;
 }
 
-async Task<int> asyncMain() {
+async Task<int> asyncMain()
+{
     var results = await Task.WhenAll(learnAndSing(), Task.Run(() => { dance(); return 0; }));
     return results[0];
 }
 
-async Task<bool> checkName(string name) {
+async Task<bool> checkName(string name)
+{
     string[] invitees = ["Alice", "Bob", "Peggy", "Victor"]; // could use a HashSet
     await Task.Delay(2000);
     return invitees.Contains(name);
 }
 
-async Task<int> asyncNumIntruders() {
+async Task<int> asyncNumIntruders()
+{
     string[] names = ["Alice", "Bob", "Eve", "Mallory", "Peggy", "Victor"];
     Console.WriteLine("Checking in guests...");
     long startTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
