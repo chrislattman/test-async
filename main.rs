@@ -4,7 +4,7 @@ use async_std::task;
 use futures::{executor, future};
 
 struct Song {
-    index: i32
+    index: i32,
 }
 
 async fn learn_song() -> Song {
@@ -12,8 +12,8 @@ async fn learn_song() -> Song {
     // while waiting.
     let song_index = 2;
     task::sleep(time::Duration::from_secs(1)).await;
-    println!("Learning song with index {}", song_index);
-    return Song{index: song_index};
+    println!("Learning song with index {song_index}");
+    Song { index: song_index }
 }
 
 async fn sing_song(song: &Song) {
@@ -30,7 +30,7 @@ async fn learn_and_sing() -> i32 {
     // thread, which makes it possible to `dance` at the same time.
     let song = learn_song().await;
     sing_song(&song).await;
-    return song.index;
+    song.index
 }
 
 async fn async_main() -> i32 {
@@ -40,13 +40,13 @@ async fn async_main() -> i32 {
     // `learn_and_sing` can take back over. If both futures are blocked, then
     // `async_main` is blocked and will yield to the executor.
     let results = futures::join!(learn_and_sing(), dance());
-    return results.0;
+    results.0
 }
 
 async fn check_name(name: &str) -> bool {
     let invitees = ["Alice", "Bob", "Peggy", "Victor"]; // could use a HashSet
     task::sleep(time::Duration::from_secs(2)).await;
-    return invitees.contains(&name);
+    invitees.contains(&name)
 }
 
 async fn async_num_intruders() -> usize {
@@ -58,13 +58,13 @@ async fn async_num_intruders() -> usize {
     // No known equivalent to the line of code above due to borrow checker
     let end_time = time::SystemTime::now();
     let elapsed = end_time.duration_since(start_time).unwrap().as_secs_f64();
-    println!("Checking in guests took {:.3} seconds", elapsed);
-    return results.iter().filter(|result| !**result).count();
+    println!("Checking in guests took {elapsed:.3} seconds");
+    results.iter().filter(|result| !**result).count()
 }
 
 fn main() {
     let result = executor::block_on(async_main());
-    println!("Got this index from async_main: {}", result);
+    println!("Got this index from async_main: {result}");
     let intruders = executor::block_on(async_num_intruders());
-    println!("There are {} intruders!", intruders);
+    println!("There are {intruders} intruders!");
 }
