@@ -36,13 +36,13 @@ async def async_main() -> int:
 
 
 async def check_name(name: str) -> bool:
-    invitees = ["Alice", "Bob", "Peggy", "Victor"] # could use a set
+    invitees = ("Alice", "Bob", "Peggy", "Victor") # could use a set
     await asyncio.sleep(2)
     return name in invitees
 
 
 async def async_num_intruders() -> int:
-    names = ["Alice", "Bob", "Eve", "Mallory", "Peggy", "Victor"]
+    names = ("Alice", "Bob", "Eve", "Mallory", "Peggy", "Victor")
     print("Checking in guests...")
     start_time = time.time()
     tasks = [asyncio.create_task(check_name(name)) for name in names] # Tasks start executing here
